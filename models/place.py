@@ -3,6 +3,8 @@
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, Integer, String, ForeignKey, Float, Table
 from sqlalchemy.orm import relationship
+from models.amenity import Amenity
+from models.review import Review
 from os import getenv
 
 storage_type = getenv("HBNB_TYPE_STORAGE")
@@ -22,6 +24,10 @@ class Place(BaseModel, Base):
         price_by_night = Column(Float, nullable=False, default=0)
         latitude = Column(Float, nullable=True)
         longitude = Column(Float, nullable=True)
+        amenities = relationship("Amenity", secondary=amenity_place,
+                                 viewonly=False,
+                                 back_populates="place_amenities")
+        reviews = relationship('Review', cascade="all,delete", backref="place")
     else:
         city_id = ""
         user_id = ""
@@ -34,3 +40,27 @@ class Place(BaseModel, Base):
         latitude = 0.0
         longitude = 0.0
         amenity_ids = []
+
+    if getenv("HBNB_TYPE_STORAGE", None) != "db":
+        @property
+        def reviews(self):
+            """reviews method"""
+            review_list = []
+            for review in list(models.storage.all(Review).values()):
+                if review.place_id == self.id:
+                    review_list.append(review)
+            return review_list
+
+        @property
+        def amenities(self):
+            """get/set linked 'Amenities'"""
+            amenity_list = []
+            for amenity in list(models.storage.all(Amenity).values()):
+                if amenity.id in self.amenity_ids:
+                    amenity_list.append(amenity)
+            return amenity_list
+
+        @amenities.setter
+        def amenities(self, value):
+            if type(value) == Amenity:
+                self.amenity_ids.append(value.id)
