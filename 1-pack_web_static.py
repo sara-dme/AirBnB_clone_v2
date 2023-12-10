@@ -11,7 +11,6 @@ def do_pack():
     dt = datetime.now().strftime('%Y%m%d%H%M%S')
     if not os.path.isdir("versions"):
         os.mkdir("versions")
-
     path = "versions/web_static_{}.tgz".format(dt)
     try:
         print("Packing web_static to {}".format(path))
