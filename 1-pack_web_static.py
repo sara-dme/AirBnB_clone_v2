@@ -9,9 +9,15 @@ def do_pack():
     """ Archives the static files
     """
     dt = datetime.now().strftime('%Y%m%d%H%M%S')
-    dr = "mkdir -p versions"
-    path = "versions/web_static_{}".format(dt)
-    print("Packing web_static to {}".format(path))
-    if local("{} && tar -cvzf {} web_static".format(dr, path)).succeeded:
+    if not os.path.isdir("versions"):
+        os.mkdir("versions")
+
+    path = "versions/web_static_{}.tgz".format(dt)
+    try:
+        print("Packing web_static to {}".format(path))
+        local("tar -cvzf {} web_static".format(path))
+        sz = os.stat(path).st_size
+        print("web_static packed: {} -> Bytes".format(path, sz))
         return path
-    return None
+    except Exception:
+        return None
