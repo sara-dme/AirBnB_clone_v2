@@ -28,13 +28,13 @@ def display_c_files(text):
 @app.route("/python/<text>", strict_slashes=False)
 def display_python(text='is cool'):
     """ display python followed by the var """
-    return "Python {}".fromat(text.replace('_', ' '))
+    return "Python {}".format(text.replace('_', ' '))
 
 
 @app.route("/number/<int:n>", strict_slashes=False)
 def display_number(n):
     """ display n """
-    return '{} is a number'.format(n)
+    return "{} is a number".format(n)
 
 
 @app.route("/numbber_template/<int:n>", strict_slashes=False)
