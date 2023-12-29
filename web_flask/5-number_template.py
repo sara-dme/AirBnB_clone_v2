@@ -5,6 +5,7 @@ from flask import Flask
 
 app = Flask(__name__)
 
+
 @app.route("/", strict_slashes=False)
 def index():
     """ return hello hbnb"""
@@ -22,11 +23,13 @@ def display_c_files(text):
     """Display the c + value of text var"""
     return 'C' + text.replace('_', ' ')
 
+
 @app.route("/python", strict_slashes=False)
 @app.route("/python/<text>", strict_slashes=False)
 def display_python(text='is cool'):
     """ display python followed by the var """
     return 'Python ' + text.replace('_', ' ')
+
 
 @app.route("/number/<int:n>", strict_slashes=False)
 def display_number(n):
@@ -38,7 +41,6 @@ def display_number(n):
 def display_template(n):
     """ display template if n is a num """
     return render_template("5-number.html", n=n)
-
 
 
 if __name__ == "__main__":
