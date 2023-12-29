@@ -21,7 +21,7 @@ def hbnb():
 @app.route("/c/<text>", strict_slashes=False)
 def display_c_files(text):
     """Display the c + value of text var"""
-    return 'C' + text.replace('_', ' ')
+    return "C {}".format(text.replace('_', ' '))
 
 
 if __name__ == "__main__":
