@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<HTML lang="en">
+	<HEAD>
+		<meta charset="utf-8">
+		<TITLE>AirBNB clone</TITLE>
+		<link rel="stylesheet" href="../static/styles/4-common.css">    	    <link rel="stylesheet" href="../static/styles/3-header.css">
+    		<link rel="stylesheet" href="../static/styles/3-footer.css">
+    		<link rel="stylesheet" href="../static/styles/6-filters.css">
+
+	</HEAD>
+	<BODY>
+		<HEADER></HEADER>
+		<DIV class="filters">
+			<DIV class="location">
+				<H3>States</h3>
+				<div class="popover">
+					<ul>
+			{% for state in states.values()|sort(attribute='name') %}
+			<li><b>{{ state.name }}</b>
+			{% endfor %}
+			<ul>
+			{% for city in states.cities|sort(attribute="name") %}
+			<li>{{ city.name}}</li>
+			{% endfor %}
+			</ul>
+			</li>
+			{% endfor %}
+					</ul>
+			</div>
+			</div>
+			<div class="amenities">
+				<h3>Amenities</h3>
+				<ul class="popover">
+					{% for amenity in amenities.values()|sort(attribute="name") %}
+					<li>{{ amenity.name }}</li>
+					{% endfor %}
+				</ul>
+			</div>
+			<button>Search</button>
+			</section>
+			</div>
+
+			<footer>
+				Holberthon School </footer>
+
+	</BODY>
+</HTML>
